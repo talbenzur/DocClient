@@ -21,6 +21,7 @@ h2 {
 body {
   background: #d5e1ce;
 }
+
 .box {
   width: 50%;
   border: 15px solid rgb(10, 70, 47);
@@ -34,4 +35,17 @@ body {
 }
 .input {
   width: 100%;
+}
+#documentArea {
+  width: 90%;
+
+  border: 15px solid rgb(127, 161, 149);
+}
+textarea {
+  padding-top: 50px;
+  width: 100%;
+  height: 50%;
+}
+.doc-main {
+  padding-top: 50px;
 }

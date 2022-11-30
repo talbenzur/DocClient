@@ -9,52 +9,49 @@
     <div class="container">
       <br />
       <div class="row">
-          <script src="main.js"></script>
-<!--signup-->
-          <div class="box">
-            <h2>Sign Up</h2>
-            <form id="signup">
-              <div class="mb-3">
-                <label for="emailInput" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="emailInput" />
-              </div>
-              <div class="mb-3">
-                <label for="userInput" class="form-label">Name</label>
-                <input type="text" class="form-control" id="userInput" />
-              </div>
-              <div class="mb-3">
-                <label for="passwordInput" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="passwordInput"
-                />
-              </div>
-              <button type="submit" id="btnSignup"class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-<!--login-->
+        <script src="main.js"></script>
+        <!--signup-->
+        <div class="box">
+          <h2>Sign Up</h2>
+          <form id="signup">
+            <div class="mb-3">
+              <label for="emailInput" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="emailInput" />
+            </div>
+            <div class="mb-3">
+              <label for="userInput" class="form-label">Name</label>
+              <input type="text" class="form-control" id="userInput" />
+            </div>
+            <div class="mb-3">
+              <label for="passwordInput" class="form-label">Password</label>
+              <input type="password" class="form-control" id="passwordInput" />
+            </div>
+            <button type="submit" id="btnSignup" class="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+        <!--login-->
         <div class="box">
           <h2>Log In</h2>
           <form id="login">
-             <div class="mb-3">
-                <label for="emailInput" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="emailInput" />
-              </div>
-           <div class="mb-3">
-                <label for="passwordInput" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="passwordInput"
-                />
-              </div>
+            <div class="mb-3">
+              <label for="emailInput" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="emailInput" />
+            </div>
+            <div class="mb-3">
+              <label for="passwordInput" class="form-label">Password</label>
+              <input type="password" class="form-control" id="passwordInput" />
+            </div>
 
-            <button type="submit" id="btnLogin" class="btn btn-primary">Submit</button>
+            <button type="submit" id="btnLogin" class="btn btn-primary">
+              Submit
+            </button>
           </form>
         </div>
-<!--docs-->
-      <div>
+      </div>
+      <!--docs-->
+      <div class="box" id="documentArea">
         <div>
           <h2>Docs</h2>
           <h6>
@@ -63,9 +60,7 @@
             <span id="doc-last-edited"></span>
           </h6>
 
-          <button class="copyLink btn btn-info" type="button">
-            Copy Link
-          </button>
+          <button class="copyLink btn btn-info" type="button">Copy Link</button>
           <button class="import btn btn-outline-success" type="button">
             Import
           </button>
@@ -74,47 +69,51 @@
           </button>
         </div>
 
-        <div class="col-9">
+        <div class="doc-main">
           <textarea class="form-control" id="main-doc" rows="20"></textarea>
         </div>
       </div>
-<!--share-->
-<div class="box">
-      <div class="share">
-        <div class="share_box">
-          <h2>Share</h2>
+      <!--share-->
+      <div class="box">
+        <div class="share">
+          <div class="share_box">
+            <h2>Share</h2>
 
-          <div id="userList">
-            <input id="input-email-user" type="email" placeholder="enter Email" />
-            <button id="addUser" class="btn btn-light" type="button">
-              Add user
+            <div id="userList">
+              <input
+                id="input-email-user"
+                type="email"
+                placeholder="enter Email"
+              />
+              <button id="addUser" class="btn btn-light" type="button">
+                Add user
+              </button>
+            </div>
+
+            <div id="users-table-div">
+              <ul id="users-table"></ul>
+            </div>
+
+            <label for="permission">please select permission</label>
+            <select name="permission" id="permission">
+              <option value="OWNER">Owner</option>
+              <option value="EDITOR">Editor</option>
+              <option value="VIEWER" selected>Viewer</option>
+            </select>
+
+            <button
+              id="btnUpdateAndNotify"
+              type="button"
+              class="btn btn-secondary"
+            >
+              Update & Notify
+            </button>
+            <button id="btnUpdate" type="button" class="btn btn-secondary">
+              Update
             </button>
           </div>
-
-          <div id="users-table-div">
-            <ul id="users-table"></ul>
-          </div>
-
-          <label for="permission">please select permission</label>
-          <select name="permission" id="permission">
-            <option value="OWNER">Owner</option>
-            <option value="EDITOR">Editor</option>
-            <option value="VIEWER" selected>Viewer</option>
-          </select>
-
-          <button
-            id="btnUpdateAndNotify"
-            type="button"
-            class="btn btn-secondary"
-          >
-            Update & Notify
-          </button>
-          <button id="btnUpdate" type="button" class="btn btn-secondary">
-            Update
-          </button>
         </div>
       </div>
-    </div>
     </div>
   </body>
 </html>
