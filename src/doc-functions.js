@@ -42,4 +42,33 @@ const update = (updateData) => {
 
 const share = () => {};
 
-export { update, share };
+const importFile = () => {
+  $(".import").on("click", function () {
+    console.log("on import");
+    //TODO
+  });
+};
+
+const exportFile = () => {
+  $(".export").on("click", function () {
+    console.log("on export");
+    //TODO
+  });
+};
+
+const copyLink = () => {
+  var $temp = $("<input>");
+  var $url = $(location).attr("href");
+
+  $(".clipboard").on("click", function () {
+    console.log("on copyLink");
+
+    $("body").append($temp);
+    $temp.val($url).select();
+    document.execCommand("copy");
+    $temp.remove();
+    $("p").text("URL copied!");
+  });
+};
+
+export { update, share, importFile, exportFile, copyLink };

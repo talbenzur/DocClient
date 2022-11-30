@@ -1,4 +1,5 @@
 import { serverAddress } from "./constants";
+import axios from "axios";
 
 const createUser = (user) => {
   console.log("in createUser- signup");
@@ -30,4 +31,28 @@ const loginUser = async (email, password) => {
   });
 };
 
-export { createUser, loginUser };
+const shareRequest = async (
+  documentID,
+  ownerID,
+  emails,
+  permission,
+  notify
+) => {
+  const res = await axios({
+    method: "patch",
+    url: serverAddress + "/document/share",
+    headers: {
+      token: "1669728413023-26563711-c6d1-487f-a04e-63631185afb3",
+    },
+    data: {
+      documentID: documentID,
+      ownerID: ownerID,
+      emails: emails,
+      permission: permission,
+      notify: notify,
+    },
+  });
+  console.log(res);
+};
+
+export { createUser, loginUser, shareRequest };
