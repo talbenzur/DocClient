@@ -18,9 +18,6 @@ $(() => {
         if (key == 8 || key == 46) {
             isDelete = true;
 
-            console.log("start: " + start);
-            console.log("end: " + end);
-
             if (end - start >= 1) {
                 type = "DELETE_RANGE";
             } else {
@@ -28,25 +25,20 @@ $(() => {
                 end = end - 1;
             }
 
-            console.log(type);
             console.log("deleting: " + input.val().substring(start, end));
-            addUpdate($('#userInput').val(), type, null, start, end);
+            addUpdate($('#emailInput').val(), type, null, start, end);
         }
     });
     input.on("input", (event) => {
         if (!isDelete) {
             if (end - start >= 1) {
                 type = "APPEND_RANGE";
-
             } else {
                 type = "APPEND";
                 end = end + 1;
             }
     
-            console.log("start: " + start);
-            console.log("end: " + end);
-    
-            addUpdate($('#userInput').val(), type, event.originalEvent.data, start, end);
+            addUpdate($('#emailInput').val(), type, event.originalEvent.data, start, end);
         }
 
         isDelete = false;
@@ -54,7 +46,7 @@ $(() => {
 })
 
 const update = (updateData) => {
-    let user = $('#userInput').val();
+    let user = $('#emailInput').val();
     if (user != updateData.userEmail) {
         switch (updateData.type) {
             case "APPEND":
