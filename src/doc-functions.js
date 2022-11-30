@@ -6,21 +6,26 @@ $(() => {
 
     var input = $('#main-doc');
     let isDelete = false;
+    let start, end;
+    let type;
 
     input.on('keydown', (event) => {
         var key = event.keyCode || event.charCode;
 
+        start = input.prop("selectionStart");
+        end = input.prop("selectionEnd");
+
         if (key == 8 || key == 46) {
             isDelete = true;
-            let start = input.prop("selectionStart");
-            let end = input.prop("selectionEnd") - 1;
-            let type = "DELETE";
 
             console.log("start: " + start);
             console.log("end: " + end);
 
-            if (end - start > 1) {
+            if (end - start >= 1) {
                 type = "DELETE_RANGE";
+            } else {
+                type = "DELETE";
+                end = end - 1;
             }
 
             console.log(type);
@@ -30,16 +35,16 @@ $(() => {
     });
     input.on("input", (event) => {
         if (!isDelete) {
-            let start = input.prop("selectionStart") - 1;
-            let end = input.prop("selectionEnd");
-            let type = "APPEND";
+            if (end - start >= 1) {
+                type = "APPEND_RANGE";
+
+            } else {
+                type = "APPEND";
+                end = end + 1;
+            }
     
             console.log("start: " + start);
             console.log("end: " + end);
-    
-            if (end - start > 1) {
-                type = "APPEND_RANGE";
-            }
     
             addUpdate($('#userInput').val(), type, event.originalEvent.data, start, end);
         }
@@ -98,11 +103,11 @@ const deleteText = (updateData) => {
 
 const deleteRange = (updateData) => {
     let textArea = $('#main-doc');
-    let start = textArea.prop("selectionStart");
-    let end = textArea.prop("selectionEnd");
+    let start = updateData.startPosition;
+    let end = updateData.endPosition;
     let text = textArea.val();
 
-    text = text.substring(0, start) + text.substring(end + 1);
+    text = text.substring(0, start) + text.substring(end);
     textArea.val(text);
 
     textArea[0].setSelectionRange(start, start);
@@ -110,14 +115,15 @@ const deleteRange = (updateData) => {
 
 const appendRange = (updateData) => {
     let textArea = $('#main-doc');
-    let start = textArea.prop("selectionStart");
-    let end = textArea.prop("selectionEnd");
+    let start = updateData.startPosition;
+    let end = updateData.endPosition;
     let text = textArea.val();
+    let endOfAppendedText = start + updateData.content.length;
 
-    text = text.substring(0, start) + updateData.content + text.substring(end + 1);
+    text = text.substring(0, start) + updateData.content + text.substring(end);
     textArea.val(text);
 
-    textArea[0].setSelectionRange(end, end);
+    textArea[0].setSelectionRange(endOfAppendedText, endOfAppendedText);
 }
 
 export { update }
