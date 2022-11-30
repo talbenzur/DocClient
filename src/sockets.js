@@ -28,8 +28,8 @@ const openConnection = () => {
     stompClient.connect({}, onConnected);
 }
 
-const addUpdate = (user, content, startPosition, endPosition) => {
-    sendUpate(user, "APPEND", content, startPosition, endPosition)
+const addUpdate = (user, type, content, startPosition, endPosition) => {
+    sendUpate(user, type, content, startPosition, endPosition)
 }
 
 const sendUpate = (user, type, content, startPosition, endPosition) => {
