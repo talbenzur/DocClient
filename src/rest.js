@@ -1,15 +1,19 @@
-import { serverAddress } from "./constants"
+import { serverAddress } from "./constants";
 import axios from "axios";
 
 const createUser = (user) => {
-    fetch(serverAddress + "/user", {
-      method: 'POST',
-      body: JSON.stringify({ name: user.name, email: user.email, password: user.password }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-}
+  fetch(serverAddress + "/user", {
+    method: "POST",
+    body: JSON.stringify({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
 const loginUser = async (email, password) => {
   console.log("im logging in");
   fetch(serverAddress + "/auth/login", {
@@ -80,4 +84,15 @@ const fileExport = async (token, documentId, userId) => {
   console.log(res);
 };
 
-export { createUser, loginUser, shareRequest, fileImport, fileExport };
+const getURL = async (documentId) => {
+  const res = await axios({
+    method: "get",
+    url: serverAddress + "/document/getUrl",
+    data: {
+      documentId: documentId,
+    },
+  });
+  console.log(res);
+};
+
+export { createUser, loginUser, shareRequest, fileImport, fileExport, getURL };
