@@ -2,7 +2,7 @@ import $ from "jquery";
 import { createUser, loginUser, shareRequest } from "./rest";
 import { openConnection } from "./sockets";
 import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
 $(() => {
