@@ -43,6 +43,26 @@ $(() => {
 
         isDelete = false;
     })
+    $(".copyLink").on("click", function () {
+        console.log("on copyLink");
+        copyLink();
+        //implement: send- documentId
+        getURL(documentId);
+      });
+    
+      $(".import").on("click", function () {
+        console.log("on import");
+    
+        //implement: send- token, ownerId, filePath, parentId
+        fileImport(token, ownerId, filePath, parentId);
+      });
+    
+      $(".export").on("click", function () {
+        console.log("on export");
+    
+        //implement: send- token, documentId, userId
+        fileExport(token, documentId, userId);
+      });
 })
 
 const update = (updateData) => {
@@ -117,5 +137,15 @@ const appendRange = (updateData) => {
 
     textArea[0].setSelectionRange(endOfAppendedText, endOfAppendedText);
 }
+
+const copyLink = () => {
+    var $temp = $("<input>");
+    var $url = $(location).attr("href");
+    $("body").append($temp);
+    $temp.val($url).select();
+    document.execCommand("copy");
+    $temp.remove();
+    $("p").text("URL copied!");
+  };
 
 export { update }
