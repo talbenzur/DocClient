@@ -55,4 +55,35 @@ const shareRequest = async (
   console.log(res);
 };
 
-export { createUser, loginUser, shareRequest };
+const fileImport = async (token, ownerId, filePath, parentId) => {
+  const res = await axios({
+    method: "post",
+    url: serverAddress + "/document/import",
+    headers: {
+      token: token,
+    },
+    data: {
+      ownerId: ownerId,
+      filePath: filePath,
+      parentId: parentId,
+    },
+  });
+  console.log(res);
+};
+
+const fileExport = async (token, documentId, userId) => {
+  const res = await axios({
+    method: "get",
+    url: serverAddress + "/document/export",
+    headers: {
+      token: token,
+    },
+    data: {
+      documentId: documentId,
+      userId: userId,
+    },
+  });
+  console.log(res);
+};
+
+export { createUser, loginUser, shareRequest, fileImport, fileExport };

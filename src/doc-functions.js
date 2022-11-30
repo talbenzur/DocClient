@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { addUpdate } from "./sockets";
+import { fileImport, fileExport } from "./rest";
 
 $(() => {
   var input = $("#main-doc");
@@ -20,6 +21,26 @@ $(() => {
     let end = input.prop("selectionEnd");
     addUpdate($("#userInput").val(), event.originalEvent.data, end - 1, end);
   });
+
+  $(".copyLink").on("click", function () {
+    console.log("on copyLink");
+    copyLink();
+  });
+
+  $(".import").on("click", function () {
+    console.log("on import");
+    
+    //implement: token, ownerId, filePath, parentId
+    fileImport(token, ownerId, filePath, parentId);
+  });
+
+  $(".export").on("click", function () {
+    console.log("on export");
+
+    //implement: token, documentId, userId
+    fileExport(token, documentId, userId);
+  });
+
 });
 
 const update = (updateData) => {
@@ -42,33 +63,14 @@ const update = (updateData) => {
 
 const share = () => {};
 
-const importFile = () => {
-  $(".import").on("click", function () {
-    console.log("on import");
-    //TODO
-  });
-};
-
-const exportFile = () => {
-  $(".export").on("click", function () {
-    console.log("on export");
-    //TODO
-  });
-};
-
 const copyLink = () => {
   var $temp = $("<input>");
   var $url = $(location).attr("href");
-
-  $(".clipboard").on("click", function () {
-    console.log("on copyLink");
-
-    $("body").append($temp);
-    $temp.val($url).select();
-    document.execCommand("copy");
-    $temp.remove();
-    $("p").text("URL copied!");
-  });
+  $("body").append($temp);
+  $temp.val($url).select();
+  document.execCommand("copy");
+  $temp.remove();
+  $("p").text("URL copied!");
 };
 
-export { update, share, importFile, exportFile, copyLink };
+export { update, share };
