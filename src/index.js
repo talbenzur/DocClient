@@ -4,6 +4,12 @@ import { openConnection } from "./sockets";
 import "bootstrap";
 import "./style.css";
 
+import {
+  documentId,
+  token,
+  ownerId,
+} from "./globals.js";
+
 $(() => {
   //create user
   $(document).on("submit", function (event) {
@@ -85,4 +91,4 @@ const updatePermission = (notify) => {
   shareRequest(token, documentId, ownerId, userEmailList, permission, notify);
 };
 
-export { displayMetaData }
+export { displayMetaData };
