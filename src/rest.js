@@ -34,8 +34,6 @@ const loginUser = async (user) => {
     },
   });
 
-  console.log(response);
-
   if (response.success) {
     console.log(response);
 
@@ -43,7 +41,7 @@ const loginUser = async (user) => {
     console.log("res.data.userId: " + response.data.userId);
 
     localStorage.setItem("token", response.data.token);
-    localStorage.setItem("userId", response.data.id);
+    localStorage.setItem("userId", response.data.userId);
 
     console.log(localStorage.getItem("token"));
     console.log(localStorage.getItem("userId"));
@@ -76,13 +74,20 @@ const shareRequest = async (
       notify: notify,
     },
   });
+  console.log(res);
 
-  if (res.success) {
+  if ((res.status = "200")) {
     //TODO: remove email from list
+    removeAllEmails();
     alert("share successful");
   } else {
     alert("share failed");
   }
+};
+
+const removeAllEmails = () => {
+  var emailList = document.getElementById("users-table");
+  emailList.innerHTML = "";
 };
 
 const fileImport = async (token, ownerId, filePath, parentId) => {
@@ -108,7 +113,6 @@ const fileImport = async (token, ownerId, filePath, parentId) => {
   });
 };
 
-//checked!! works!!
 const fileExport = async (token, documentId, userId) => {
   console.log("fileExport");
   const res = await axios({
