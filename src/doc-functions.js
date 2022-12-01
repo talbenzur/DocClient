@@ -167,4 +167,4 @@ const copyLink = () => {
   $("p").text("URL copied!");
 };
 
-export { update, documentId };
+export { update };

@@ -10,13 +10,7 @@ const createUser = async (user) => {
     headers: {
       "Content-Type": "application/json",
     },
-    data: {
-      email: user.email,
-      name: user.name,
-      password: user.password,
-    },
   });
-  console.log(res);
 };
 
 const loginUser = async (user) => {
@@ -43,7 +37,7 @@ const loginUser = async (user) => {
     console.log("res.data.userId: " + response.data.userId);
 
     localStorage.setItem("token", response.data.token);
-    localStorage.setItem("userId", response.data.id);
+    localStorage.setItem("userId", response.data.userId);
 
     console.log(localStorage.getItem("token"));
     console.log(localStorage.getItem("userId"));
@@ -55,7 +49,6 @@ const loginUser = async (user) => {
 };
 
 const shareRequest = async (
-  token,
   documentID,
   ownerID,
   emails,
@@ -66,7 +59,7 @@ const shareRequest = async (
     method: "patch",
     url: serverAddress + "/document/share",
     headers: {
-      token: token,
+      token: "1669728413023-26563711-c6d1-487f-a04e-63631185afb3",
     },
     data: {
       documentID: documentID,
@@ -85,37 +78,42 @@ const shareRequest = async (
   }
 };
 
+const getUserDocuments = async (userId) => {
+  const res = await axios({
+    method: "get",
+    url: serverAddress + "/user/getUserDocuments",
+    headers: {
+      userId: userId,
+    }});
+
+    console.log(res.data.data);
+    return res.data.data;
+};
+
 const fileImport = async (token, ownerId, filePath, parentId) => {
   const res = await axios({
     method: "post",
     url: serverAddress + "/document/import",
     headers: {
       token: token,
-      ownerId: ownerId,
     },
     data: {
+      ownerId: ownerId,
       filePath: filePath,
       parentId: parentId,
     },
   });
   console.log(res);
-
-  res.then((response) => {
-    let data = response.data;
-    console.log(data);
-    const textarea = document.getElementById("main-doc");
-    textarea.value += data;
-  });
 };
 
-//checked!! works!!
 const fileExport = async (token, documentId, userId) => {
-  console.log("fileExport");
   const res = await axios({
     method: "get",
     url: serverAddress + "/document/export",
     headers: {
       token: token,
+    },
+    data: {
       documentId: documentId,
       userId: userId,
     },
@@ -127,11 +125,11 @@ const getURL = async (documentId) => {
   const res = await axios({
     method: "get",
     url: serverAddress + "/document/getUrl",
-    headers: {
+    data: {
       documentId: documentId,
     },
   });
   console.log(res);
 };
 
-export { createUser, loginUser, shareRequest, fileImport, fileExport, getURL };
+export { createUser, loginUser, shareRequest, fileImport, fileExport, getURL, getUserDocuments };
