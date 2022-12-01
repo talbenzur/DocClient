@@ -6,7 +6,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  color: #4a4a4e;
+  color: #0d0d25;
 }
 
 h1,
@@ -14,20 +14,22 @@ h2 {
   text-align: center;
   font-size: 2rem;
 }
+
 .tab {
   margin-top: 2.5em;
 }
 
 body {
-  background: #d5e1ce;
+  background: #e3e3e6;
 }
 
 .box {
-  width: 50%;
-  border: 10px solid rgb(10, 70, 47);
+  width: 30%;
+  border: 8px solid rgb(68, 52, 31);
   padding: 50px;
   margin: auto;
   margin-bottom: 50px;
+  background: #ffffff;
 }
 
 #content {
@@ -35,26 +37,38 @@ body {
   height: 100%;
   position: relative;
 }
+
 .input {
   width: 100%;
 }
+
 #documentArea {
-  width: 90%;
+  width: 70%;
   padding: 50px;
-  border: 10px solid rgb(127, 161, 149);
+  border: 8px solid rgb(161, 145, 127);
+  background: #b5c7d3;
 }
+
 textarea {
   padding: 20px;
   width: 100%;
   height: 50%;
+  background: #ffffff;
 }
+
 .doc-main {
   padding-top: 50px;
 }
+
 .btn {
   margin-top: 5px;
+  background: #e3e3e6;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px solid #0d0d25;
 }
 
 select {
   margin: 30px;
+  width: 50%;
 }
