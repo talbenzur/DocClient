@@ -28,13 +28,14 @@ const openConnection = () => {
     stompClient.connect({}, onConnected);
 }
 
-const addUpdate = (user, type, content, startPosition, endPosition) => {
-    sendUpate(user, type, content, startPosition, endPosition)
+const addUpdate = (userEmail, type, content, startPosition, endPosition) => {
+    sendUpate(userEmail, type, content, startPosition, endPosition)
 }
 
-const sendUpate = (user, type, content, startPosition, endPosition) => {
+const sendUpate = (userEmail, type, content, startPosition, endPosition) => {
     stompClient.send("/app/update", [], JSON.stringify({
-        userEmail: user,
+        documentId: 5,
+        userEmail: userEmail,
         type: type,
         content: content,
         startPosition: startPosition,
