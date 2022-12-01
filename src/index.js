@@ -6,7 +6,11 @@ import "bootstrap";
 import "./style.css";
 
 $(() => {
-  $(document).on("submit", () => {
+  //create user
+  $(document).on("submit", function (event) {
+    event.preventDefault();
+    console.log("on signup");
+
     const user = {
       email: $("#emailInput").val(),
       name: $("#userInput").val(),
@@ -15,19 +19,34 @@ $(() => {
     createUser(user);
   });
 
+  //login
+  $("#btnLogin").on("click", function (event) {
+    event.preventDefault();
+    console.log("on login");
+
+    const user = {
+      email: $("#emailInputLogin").val(),
+      password: $("#passwordInputLogin").val(),
+    };
+    loginUser(user);
+  });
+
   //add user to list
-  $(document).on("click", ".addUser", () => {
-    const email = document.getElementById("#input-email-user").val();
+  $("#addUser").on("click", function () {
+    console.log("on add user");
+    const email = document.getElementById("email-input-user").value;
     addEmailToList(email);
   });
 
   //update permission
   $(document).on("click", "#btnUpdate", () => {
+    console.log("on update");
     updatePermission(false);
   });
 
   //update permission and notify
   $(document).on("click", "#btnUpdateAndNotify", () => {
+    console.log("on update and notify");
     updatePermission(true);
   });
 });
@@ -36,9 +55,11 @@ openConnection();
 const userEmailList = new Array();
 
 //share
-const addEmailToList = () => {
-  var li = document.createElement("li");
+const addEmailToList = (inputUser) => {
+  console.log("in addEmailToList, input user: " + inputUser);
+
   var user = document.createTextNode(inputUser);
+  var li = document.createElement("li");
   li.appendChild(user);
   userEmailList.push(inputUser);
   console.log(inputUser);
@@ -47,8 +68,14 @@ const addEmailToList = () => {
 };
 
 const updatePermission = (notify) => {
-  console.log("on Update Permission user list: " + userEmailList);
-  //update permission
-  //TODO: change ownerId, parentId
-  shareRequest(76, 74, userEmailList, permission, notify);
+  let permission = document.getElementById("permission").value;
+
+  console.log(
+    "on Update Permission user list: " +
+      userEmailList +
+      " permission: " +
+      permission
+  );
+
+  shareRequest(token, documentId, ownerId, userEmailList, permission, notify);
 };
