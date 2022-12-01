@@ -77,7 +77,7 @@ const shareRequest = async (
     },
   });
 
-  if (response.success) {
+  if (res.success) {
     //TODO: remove email from list
     alert("share successful");
   } else {
