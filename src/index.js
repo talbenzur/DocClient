@@ -2,7 +2,6 @@ import $ from "jquery";
 import { createUser, loginUser, shareRequest } from "./rest";
 import { openConnection } from "./sockets";
 import "bootstrap";
-//import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
 $(() => {
@@ -50,14 +49,20 @@ $(() => {
     updatePermission(true);
   });
 });
+
 openConnection();
 
 const userEmailList = new Array();
 
-//share
+// Display document metadata:
+const displayMetaData = (metadata) => {
+  document.getElementById("doc-title").innerHTML = metadata.title;
+  document.getElementById("doc-last-edited").innerHTML = metadata.lastUpdated;
+};
+
+// Share
 const addEmailToList = (inputUser) => {
   console.log("in addEmailToList, input user: " + inputUser);
-
   var user = document.createTextNode(inputUser);
   var li = document.createElement("li");
   li.appendChild(user);
@@ -79,3 +84,5 @@ const updatePermission = (notify) => {
 
   shareRequest(token, documentId, ownerId, userEmailList, permission, notify);
 };
+
+export { displayMetaData }
