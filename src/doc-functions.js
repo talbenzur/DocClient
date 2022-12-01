@@ -7,14 +7,14 @@ import {
   deleteText,
   deleteRange,
   appendRange,
-} from "./editDoc";
+} from "./edit-doc";
 
 //hardcoded value for testing
-const documentId = 94;
-const token = "1669842953374-27889509-52ee-4ac5-bd1a-4801c3266ee7";
-const userId = 74;
-const parentId = 23;
-const ownerId = 74;
+const documentId = 24;
+const token = "1669882377034-4d599811-103b-444b-8437-29305889f3b9";
+const userId = 3;
+const parentId = 22;
+const ownerId = 3;
 const filePath = "C:\\Users\\tbz19\\Downloads\\importDocument11.txt";
 
 $(() => {

@@ -30,6 +30,8 @@ const createUser = async (user) => {
       password: user.password,
     },
   });
+
+  console.log(res);
 };
 
 const loginUser = async (user) => {
