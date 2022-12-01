@@ -1,5 +1,5 @@
 import $ from "jquery";
-
+//all edit doc function 
 const update = (updateData) => {
   let user = $("#userInput").val();
   if (user != updateData.userEmail) {
