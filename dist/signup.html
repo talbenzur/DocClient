@@ -7,50 +7,27 @@
     <title>Signup</title>
   </head>
   <body>
-    <div class="form-wrapper">
-      <div class="form col-5">
-        <h2>Sign up</h2>
+    <div class="boxAuth">
+        <script src="main.js"></script>
+
+        <h2>Sign Up</h2>
         <form id="signup">
-          <div class="form-floating mb-5 col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              placeholder="Name"
-            />
-            <label for="floatingInput">Name</label>
+          <div class="mb-3">
+            <label for="emailInput" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="emailInput" />
           </div>
-          <div class="form-floating mb-5 col-8">
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              placeholder="name@example.com"
-            />
-            <label for="floatingInput">Email address</label>
+          <div class="mb-3">
+            <label for="userInput" class="form-label">Name</label>
+            <input type="text" class="form-control" id="userInput" />
           </div>
-          <div class="form-floating mb-5 col-8">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Password"
-            />
-            <label for="floatingPassword">Password</label>
-            <i class="bx bx-hide eye-icon"></i>
+          <div class="mb-3">
+            <label for="passwordInput" class="form-label">Password</label>
+            <input type="password" class="form-control" id="passwordInput" />
           </div>
           <button type="submit" id="btnSignup" class="btn btn-primary">
             Submit
           </button>
         </form>
-
-        <div class="form-link">
-          <span
-            >Already have an account?
-            <a href="/login" class="login-link">Login</a>
-          </span>
-        </div>
       </div>
-    </div>
   </body>
 </html>
