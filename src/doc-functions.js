@@ -55,7 +55,6 @@ $(() => {
     $(".copyLink").on("click", function () {
         console.log("on copyLink");
         copyLink();
-        //implement: send- documentId
         getURL(documentId);
       });
     
@@ -67,11 +66,10 @@ $(() => {
       });
     
     $(".export").on("click", function () {
-        console.log("on export");
-    
-        //implement: send- token, documentId, userId
-        fileExport(token, documentId, userId);
-      });
+      console.log("on export");
+      //let docId = $("#main-doc").getAttribute("documentid");
+      fileExport(token, documentId, userId);
+    });
 
 })
 
