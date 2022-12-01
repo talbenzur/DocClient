@@ -1,20 +1,6 @@
 import { serverAddress } from "./constants";
 import axios from "axios";
 
-// const createUser = (user) => {
-//   fetch(serverAddress + "/auth/signup", {
-//     method: "POST",
-//     body: JSON.stringify({
-//       name: user.name,
-//       email: user.email,
-//       password: user.password,
-//     }),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-// };
-
 const createUser = async (user) => {
   console.log("in create user");
 
@@ -32,10 +18,11 @@ const createUser = async (user) => {
   });
   console.log(res);
 };
+
 const loginUser = async (user) => {
   console.log("in Login user");
 
-  const res = await axios({
+  const { data: response } = await axios({
     method: "post",
     url: serverAddress + "/auth/login",
     headers: {
@@ -46,7 +33,25 @@ const loginUser = async (user) => {
       password: user.password,
     },
   });
-  console.log(res);
+
+  console.log(response);
+
+  if (response.success) {
+    console.log(response);
+
+    console.log("res.data.token: " + response.data.token);
+    console.log("res.data.userId: " + response.data.userId);
+
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("userId", response.data.id);
+
+    console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem("userId"));
+
+    alert("Login successful");
+  } else {
+    alert("Login failed");
+  }
 };
 
 const shareRequest = async (
@@ -71,7 +76,13 @@ const shareRequest = async (
       notify: notify,
     },
   });
-  console.log(res);
+
+  if (res.success) {
+    //TODO: remove email from list
+    alert("share successful");
+  } else {
+    alert("share failed");
+  }
 };
 
 const fileImport = async (token, ownerId, filePath, parentId) => {

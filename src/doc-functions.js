@@ -4,8 +4,6 @@ import { shareRequest, fileImport, fileExport, getURL } from "./rest";
 
 import {
   documentId,
-  token,
-  userId,
   parentId,
   ownerId,
   filePath,
@@ -69,13 +67,17 @@ $(() => {
     console.log("on import");
 
     //implement: send- token, ownerId, filePath, parentId
-    fileImport(token, ownerId, filePath, parentId);
+    fileImport(localStorage.getItem("token"), ownerId, filePath, parentId);
   });
 
   $(".export").on("click", function () {
     console.log("on export");
     //let docId = $("#main-doc").getAttribute("documentid");
-    fileExport(token, documentId, userId);
+    fileExport(
+      localStorage.getItem("token"),
+      documentId,
+      localStorage.getItem("userId")
+    );
   });
 });
 
