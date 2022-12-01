@@ -6,7 +6,6 @@ import "./style.css";
 
 import {
   documentId,
-  token,
   ownerId,
 } from "./globals.js";
 
@@ -88,7 +87,14 @@ const updatePermission = (notify) => {
       permission
   );
 
-  shareRequest(token, documentId, ownerId, userEmailList, permission, notify);
+  shareRequest(
+    localStorage.getItem("token"),
+    documentId,
+    ownerId,
+    userEmailList,
+    permission,
+    notify
+  );
 };
 
 export { displayMetaData };
