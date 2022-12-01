@@ -34,6 +34,7 @@ const addUpdate = (userEmail, type, content, startPosition, endPosition) => {
 
 const sendUpate = (userEmail, type, content, startPosition, endPosition) => {
     stompClient.send("/app/update", [], JSON.stringify({
+        documentId: 5,
         userEmail: userEmail,
         type: type,
         content: content,
