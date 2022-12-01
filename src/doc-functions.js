@@ -3,7 +3,7 @@ import { addUpdate } from "./sockets";
 import { shareRequest, fileImport, fileExport, getURL } from "./rest";
 
 //hardcoded value for testing
-const documentId = 24;
+const documentId = 5;
 const token = "1669842953374-27889509-52ee-4ac5-bd1a-4801c3266ee7";
 const userId = 3;
 const parentId = 22;
@@ -164,4 +164,4 @@ const copyLink = () => {
   $("p").text("URL copied!");
 };
 
-export { update };
+export { update, documentId };
