@@ -1,6 +1,13 @@
 import $ from 'jquery'
 import { addUpdate } from './sockets';
 
+//hardcoded value for testing
+const documentId = 94;
+const token = "1669842953374-27889509-52ee-4ac5-bd1a-4801c3266ee7";
+const userId = 74;
+const parentId = 23;
+const ownerId = 74;
+const filePath = "C:\\Users\\tbz19\\Downloads\\importDocument11.txt";
 
 $(() => {
 
@@ -65,7 +72,7 @@ $(() => {
         //implement: send- token, documentId, userId
         fileExport(token, documentId, userId);
       });
-      
+
 })
 
 const update = (updateData) => {
