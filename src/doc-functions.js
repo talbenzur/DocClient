@@ -29,6 +29,7 @@ $(() => {
             addUpdate($('#emailInput').val(), type, null, start, end);
         }
     });
+
     input.on("input", (event) => {
         if (!isDelete) {
             if (end - start >= 1) {
@@ -43,6 +44,7 @@ $(() => {
 
         isDelete = false;
     })
+
     $(".copyLink").on("click", function () {
         console.log("on copyLink");
         copyLink();
@@ -50,19 +52,20 @@ $(() => {
         getURL(documentId);
       });
     
-      $(".import").on("click", function () {
+    $(".import").on("click", function () {
         console.log("on import");
     
         //implement: send- token, ownerId, filePath, parentId
         fileImport(token, ownerId, filePath, parentId);
       });
     
-      $(".export").on("click", function () {
+    $(".export").on("click", function () {
         console.log("on export");
     
         //implement: send- token, documentId, userId
         fileExport(token, documentId, userId);
       });
+      
 })
 
 const update = (updateData) => {
