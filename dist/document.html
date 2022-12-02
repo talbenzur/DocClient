@@ -7,26 +7,52 @@
     <title>Document</title>
   </head>
   <body>
-    <h2>Docs</h2>
-    <!--<button class="openShareModal" class="btn btn-primary">Share</button> -->
+    <script src="main.js"></script>
 
-    <h6>
-      Document ID: <span id="doc-id"></span> Title:
-      <span id="doc-title"></span> Last edited:
-      <span id="doc-last-edited"></span>
-    </h6>
-
-    <a class="btn btn-secondary" href="/share">Share</a>
-    <button class="clipboard btn btn-info" type="button">Copy Link</button>
-    <button class="import btn btn-outline-success" type="button">Import</button>
-    <button class="export btn btn-outline-success" type="button">Export</button>
-
-    <!--<button class="openShareModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shareModal">Share</button> -->
-
-    <div class="col-12">
-      <textarea class="form-control" id="main-doc" rows="30"></textarea>
+    <!-- Select document ID -->
+    <div class="box">
+      <h3>Select document:</h3>
+      <form id="selectDocument">
+        <label for="documentIdInput" class="form-label">Document # </label>
+        <select name="document-id-selector" id="document-id-selector"></select>
+        <button type="submit" id="btnSelectDocument" class="btn btn-primary">
+          Open
+        </button>
+      </form>
     </div>
 
-    <div class="modal_wrapper" data-include="modalShare"></div>
+    <!--docs-->
+    <div class="box" id="documentArea">
+      <div>
+        <h2 id="doc-title"></h2>
+        <h5>
+          <div id="doc-last-edited-label">
+            Last edited: <span id="doc-last-edited"></span>
+          </div>
+          <div id="doc-active-users-label">
+            Active users: <span id="doc-active-users"></span>
+          </div>
+        </h5>
+        <a href="./share.html">Share</a>
+
+        <button class="copyLink btn btn-info" type="button">Copy Link</button>
+        <button class="import btn btn-outline-success" type="button">
+          Import
+        </button>
+        <button class="export btn btn-outline-success" type="button">
+          Export
+        </button>
+      </div>
+
+      <div class="doc-main">
+        <textarea
+          class="form-control"
+          id="main-doc"
+          rows="20"
+          documentId="71"
+        ></textarea>
+      </div>
+    </div>
+    <!--End docs-->
   </body>
 </html>

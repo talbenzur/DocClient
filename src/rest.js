@@ -14,7 +14,17 @@ const createUser = async (user) => {
       email: user.email,
       name: user.name,
       password: user.password,
-    }});
+    },
+  });
+
+  console.log(res);
+
+  if ((res.status = "200")) {
+    alert("create user successful- Check your email for activation");
+    window.location.href = "./login.html";
+  } else {
+    alert("create user failed");
+  }
 };
 
 const loginUser = async (user) => {
@@ -29,7 +39,8 @@ const loginUser = async (user) => {
     data: {
       email: user.email,
       password: user.password,
-    }});
+    },
+  });
 
   if (response.success) {
     console.log(response);
@@ -44,6 +55,8 @@ const loginUser = async (user) => {
     console.log(localStorage.getItem("userId"));
 
     alert("Login successful");
+
+    window.location.href = "./document.html";
   } else {
     alert("Login failed");
   }
@@ -73,12 +86,17 @@ const shareRequest = async (
   console.log(res);
 
   if ((res.status = "200")) {
-    //TODO: remove email from list
     removeAllEmails();
     alert("share successful");
+    window.location.href = "./document.html";
   } else {
     alert("share failed");
   }
+};
+
+const removeAllEmails = () => {
+  var emailList = document.getElementById("users-table");
+  emailList.innerHTML = "";
 };
 
 const displayUserDocuments = async (userId) => {
@@ -87,35 +105,21 @@ const displayUserDocuments = async (userId) => {
     url: serverAddress + "/document/getDocumentsByUser",
     headers: {
       userId: userId,
-    }});
- };
+    },
+  });
 
+  console.log(res.data.data);
 
-const removeAllEmails = () => {
-  var emailList = document.getElementById("users-table");
-  emailList.innerHTML = "";
-{ף
+  let documentSelect = document.getElementById("document-id-selector");
+  let idsLength = res.data.data.length;
 
-const displayUserDocuments = async (userId) => {
-  const res = await axios({
-    method: "get",
-    url: serverAddress + "/document/getDocumentsByUser",
-    headers: {
-      userId: userId,
-    }});
-
-    console.log(res.data.data);
-
-    let documentSelect = document.getElementById("document-id-selector");
-    let idsLength = res.data.data.length;
-
-    for (var i = 0; i < idsLength; i++) {
-      var text = res.data.data[i].url + " (#" + res.data.data[i].documentId + ")";
-      var documentData = document.createTextNode(text);
-      var option = document.createElement("option");
-      option.appendChild(documentData);
-      documentSelect.appendChild(option); 
-    }
+  for (var i = 0; i < idsLength; i++) {
+    var text = res.data.data[i].url + " (#" + res.data.data[i].documentId + ")";
+    var documentData = document.createTextNode(text);
+    var option = document.createElement("option");
+    option.appendChild(documentData);
+    documentSelect.appendChild(option);
+  }
 };
 
 const fileImport = async (token, ownerId, filePath, parentId) => {
@@ -160,4 +164,12 @@ const getURL = async (documentId) => {
   console.log(res);
 };
 
-export { createUser, loginUser, shareRequest, fileImport, fileExport, getURL, displayUserDocuments };
+export {
+  createUser,
+  loginUser,
+  shareRequest,
+  fileImport,
+  fileExport,
+  getURL,
+  displayUserDocuments,
+};
