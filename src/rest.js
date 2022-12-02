@@ -16,6 +16,14 @@ const createUser = async (user) => {
       password: user.password,
     },
   });
+
+  console.log(res);
+
+  if ((res.status = "200")) {
+    alert("login successful");
+  } else {
+    alert("login failed");
+  }
 };
 
 const loginUser = async (user) => {
@@ -46,6 +54,8 @@ const loginUser = async (user) => {
     console.log(localStorage.getItem("userId"));
 
     alert("Login successful");
+
+    window.location.href = "./document.html";
   } else {
     alert("Login failed");
   }
@@ -75,7 +85,6 @@ const shareRequest = async (
   console.log(res);
 
   if ((res.status = "200")) {
-    //TODO: remove email from list
     removeAllEmails();
     alert("share successful");
   } else {
