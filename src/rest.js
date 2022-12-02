@@ -20,9 +20,10 @@ const createUser = async (user) => {
   console.log(res);
 
   if ((res.status = "200")) {
-    alert("login successful");
+    alert("create user successful- Check your email for activation");
+    window.location.href = "./login.html";
   } else {
-    alert("login failed");
+    alert("create user failed");
   }
 };
 
@@ -87,6 +88,7 @@ const shareRequest = async (
   if ((res.status = "200")) {
     removeAllEmails();
     alert("share successful");
+    window.location.href = "./document.html";
   } else {
     alert("share failed");
   }
