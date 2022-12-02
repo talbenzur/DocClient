@@ -13,7 +13,7 @@
       <script src="main.js"></script>
 
       <!--signup-->
-      <div class="boxAuth">
+      <div class="boxAuth box">
         <h2>Sign Up</h2>
         <form id="signup">
           <div class="mb-3">
@@ -36,7 +36,7 @@
       <!--End signup-->
 
       <!--login-->
-      <div class="boxAuth">
+      <div class="boxAuth box">
         <h2>Log In</h2>
         <form id="login">
           <div class="mb-3">
@@ -54,6 +54,19 @@
         </form>
       </div>
       <!--End login-->
+
+      <!-- Select document ID -->
+      <div class="box">
+        <h3>Select document:</h3>
+        <form id="selectDocument">
+          <label for="documentIdInput" class="form-label">Document # </label>
+          <select name="document-id-selector" id="document-id-selector"></select>
+          <button type="submit" id="btnSelectDocument" class="btn btn-primary">
+            Open
+          </button>
+        </form>
+        
+      </div>
 
       <!--docs-->
       <div class="box" id="documentArea">

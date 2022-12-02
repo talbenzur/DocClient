@@ -5,7 +5,6 @@ import { serverAddress } from "./constants";
 import { update } from "./doc-functions";
 import { displayMetaData } from "./index.js";
 
-import { documentId } from "./globals.js";
 let stompClient;
 const socketFactory = () => {
   return new SockJS(serverAddress + "/ws");
@@ -15,7 +14,7 @@ const onMessageReceived = (payload) => {
   var message = JSON.parse(payload.body);
   console.log(message);
   update(message);
-  getMetaData(documentId);
+  getMetaData(localStorage.getItem("documentId"));
 };
 
 const onMetaDataReceived = (payload) => {
@@ -24,25 +23,46 @@ const onMetaDataReceived = (payload) => {
   displayMetaData(metadata);
 };
 
+const onActiveUsersReceived = (payload) => {
+    var activeUsers = JSON.parse(payload.body);
+    console.log(activeUsers);
+    // TODO: display active users
+  };
+
 const onConnected = () => {
   stompClient.subscribe("/topic/updates", onMessageReceived);
   stompClient.subscribe("/topic/metadata", onMetaDataReceived);
-  stompClient.send("/app/hello", [], JSON.stringify({ name: "Default user" }));
-  getMetaData(documentId);
+  stompClient.subscribe("/topic/activeUsers", onActiveUsersReceived);
+  getMetaData(localStorage.getItem("documentId"));
+//   getActiveUsers(documentId);
 };
+
+const onJoined = () => {
+    let documentId = localStorage.getItem("documentId");
+    let userId = localStorage.getItem("userId");
+    stompClient.send("/app/join", [], JSON.stringify({documentId, userId}));
+    onConnected();
+}
 
 const openConnection = () => {
   const socket = socketFactory();
   stompClient = Stomp.over(socket);
-  stompClient.connect({}, onConnected);
+  stompClient.connect({}, onJoined);
 };
+
+const join = (requiredDocumentId) => {
+    localStorage.setItem("documentId", requiredDocumentId);
+    openConnection();
+}
 
 const addUpdate = (userEmail, type, content, startPosition, endPosition) => {
   sendUpate(userEmail, type, content, startPosition, endPosition);
 };
 
 const sendUpate = (userEmail, type, content, startPosition, endPosition) => {
-  stompClient.send(
+    let documentId = localStorage.getItem("documentId");
+
+    stompClient.send(
     "/app/update",
     [],
     JSON.stringify({
@@ -56,8 +76,14 @@ const sendUpate = (userEmail, type, content, startPosition, endPosition) => {
   );
 };
 
-const getMetaData = (documentId) => {
-  stompClient.send("/app/metadata", [], documentId.toString());
+const getMetaData = () => {
+    let documentId = localStorage.getItem("documentId");
+    stompClient.send("/app/metadata", [], documentId.toString());
 };
 
-export { openConnection, addUpdate };
+const getActiveUsers = () => {
+    let documentId = localStorage.getItem("documentId");
+    stompClient.send("/app/activeUsers", [], documentId.toString());
+}
+
+export { openConnection, addUpdate, join };

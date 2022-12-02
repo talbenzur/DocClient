@@ -25,17 +25,9 @@ body {
 .box {
   width: 50%;
   border: 10px solid rgb(10, 70, 47);
-  margin: auto;
   padding: 50px;
-  margin: 20px;
-}
-
-.boxAuth {
-  width: 20%;
-  border: 15px solid rgb(10, 70, 47);
   margin: auto;
-  padding: 50px;
-  margin: 20px;
+  margin-bottom: 50px;
 }
 
 #content {
@@ -48,7 +40,7 @@ body {
 }
 #documentArea {
   width: 90%;
-
+  padding: 50px;
   border: 10px solid rgb(127, 161, 149);
 }
 textarea {
