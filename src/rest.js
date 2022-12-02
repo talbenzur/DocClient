@@ -10,7 +10,11 @@ const createUser = async (user) => {
     headers: {
       "Content-Type": "application/json",
     },
-  });
+    data: {
+      email: user.email,
+      name: user.name,
+      password: user.password,
+    }});
 };
 
 const loginUser = async (user) => {
@@ -25,8 +29,7 @@ const loginUser = async (user) => {
     data: {
       email: user.email,
       password: user.password,
-    },
-  });
+    }});
 
   if (response.success) {
     console.log(response);
@@ -78,10 +81,10 @@ const shareRequest = async (
   }
 };
 
-const getUserDocuments = async (userId) => {
+const displayUserDocuments = async (userId) => {
   const res = await axios({
     method: "get",
-    url: serverAddress + "/user/getUserDocuments",
+    url: serverAddress + "/document/getDocumentsByUser",
     headers: {
       userId: userId,
     }});
@@ -91,7 +94,28 @@ const getUserDocuments = async (userId) => {
 const removeAllEmails = () => {
   var emailList = document.getElementById("users-table");
   emailList.innerHTML = "";
+{ף
 
+const displayUserDocuments = async (userId) => {
+  const res = await axios({
+    method: "get",
+    url: serverAddress + "/document/getDocumentsByUser",
+    headers: {
+      userId: userId,
+    }});
+
+    console.log(res.data.data);
+
+    let documentSelect = document.getElementById("document-id-selector");
+    let idsLength = res.data.data.length;
+
+    for (var i = 0; i < idsLength; i++) {
+      var text = res.data.data[i].url + " (#" + res.data.data[i].documentId + ")";
+      var documentData = document.createTextNode(text);
+      var option = document.createElement("option");
+      option.appendChild(documentData);
+      documentSelect.appendChild(option); 
+    }
 };
 
 const fileImport = async (token, ownerId, filePath, parentId) => {
@@ -136,4 +160,4 @@ const getURL = async (documentId) => {
   console.log(res);
 };
 
-export { createUser, loginUser, shareRequest, fileImport, fileExport, getURL, getUserDocuments };
+export { createUser, loginUser, shareRequest, fileImport, fileExport, getURL, displayUserDocuments };

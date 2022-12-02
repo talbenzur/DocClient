@@ -3,7 +3,7 @@ import { Stomp } from "@stomp/stompjs";
 
 import { serverAddress } from "./constants";
 import { update } from "./doc-functions";
-import { displayMetaData } from "./index.js";
+import { displayMetaData, displayActiveUsers } from "./index.js";
 
 let stompClient;
 const socketFactory = () => {
@@ -26,15 +26,16 @@ const onMetaDataReceived = (payload) => {
 const onActiveUsersReceived = (payload) => {
     var activeUsers = JSON.parse(payload.body);
     console.log(activeUsers);
-    // TODO: display active users
-  };
+
+    displayActiveUsers(activeUsers);
+};
 
 const onConnected = () => {
   stompClient.subscribe("/topic/updates", onMessageReceived);
   stompClient.subscribe("/topic/metadata", onMetaDataReceived);
   stompClient.subscribe("/topic/activeUsers", onActiveUsersReceived);
   getMetaData(localStorage.getItem("documentId"));
-//   getActiveUsers(documentId);
+  getActiveUsers(localStorage.getItem("documentId"));
 };
 
 const onJoined = () => {

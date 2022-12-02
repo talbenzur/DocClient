@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { createUser, loginUser, shareRequest, getUserDocuments } from "./rest";
+import { createUser, loginUser, shareRequest, displayUserDocuments } from "./rest";
 import { join, openConnection } from "./sockets";
 import "bootstrap";
 import "./style.css";
@@ -33,8 +33,10 @@ $(() => {
       email: $("#emailInputLogin").val(),
       password: $("#passwordInputLogin").val(),
     };
+
     loginUser(user);
-    displayUserDocuments();
+    let userId = localStorage.getItem("userId");
+    displayUserDocuments(userId);
   });
 
    // open document
@@ -42,9 +44,15 @@ $(() => {
     event.preventDefault();
     console.log("opening a document");
 
-    const requiredDocumentId = $("#documentIdInput").val();
+    const requiredDocumentId = extractDocumentId($("#document-id-selector").val());
     join(requiredDocumentId);
   });
+
+  function extractDocumentId(documentData) {
+    var rx = /(#(.\d*))/g;
+    var arr = rx.exec(documentData);
+    return arr[2]; 
+  }
 
   //add user to list
   $("#addUser").on("click", function () {
@@ -76,18 +84,8 @@ const displayMetaData = (metadata) => {
   document.getElementById("doc-last-edited").innerHTML = metadata.lastUpdated;
 };
 
-const displayUserDocuments = () => {
-  let userId = localStorage.getItem("userId");
-  let documentIds = getUserDocuments(userId);
-  let documentSelect = document.getElementById("document-id-selector");
-  let idsLength = documentIds.length;
-
-  for (var i = 0; i < idsLength; i++) {
-    var documentId = document.createTextNode(documentIds[i]);
-    var option = document.createElement("option");
-    option.appendChild(documentId);
-    documentSelect.appendChild(option);
-  }
+const displayActiveUsers = (activeUsers) => {
+  document.getElementById("doc-active-users").innerHTML = activeUsers.join(', ');
 }
 
 // Share
@@ -122,4 +120,4 @@ const updatePermission = (notify) => {
   );
 };
 
-export { displayMetaData };
+export { displayMetaData, displayActiveUsers };
