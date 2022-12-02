@@ -20,7 +20,8 @@ h2 {
 }
 
 body {
-  background: #e3e3e6;
+  text-align: center;
+  background: #efeff8;
 }
 
 .box {
@@ -45,8 +46,8 @@ body {
 #documentArea {
   width: 70%;
   padding: 50px;
-  border: 8px solid rgb(161, 145, 127);
-  background: #b5c7d3;
+  border: 8px solid rgb(100, 90, 78);
+  background: #d4e3ec;
 }
 
 textarea {
@@ -65,10 +66,44 @@ textarea {
   background: #e3e3e6;
   padding-left: 10px;
   padding-right: 10px;
+  display: inline-block;
+
   border: 2px solid #0d0d25;
 }
 
 select {
   margin: 30px;
   width: 50%;
+}
+
+a:link,
+a:visited {
+  margin-top: 30px;
+
+  background-color: white;
+  color: black;
+  border: 2px solid rgb(125, 155, 125);
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+a:hover,
+a:active {
+  background-color: rgb(125, 155, 125);
+  color: rgb(255, 255, 255);
+}
+#shareLink {
+  margin-top: 5px;
+  background: #e3e3e6;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: inline-block;
+  border: 2px solid #0d0d25;
+}
+#shareLink:hover {
+  background-color: rgb(100, 90, 78);
+  color: rgb(255, 255, 255);
 }
