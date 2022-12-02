@@ -28,8 +28,6 @@ const loginUser = async (user) => {
     },
   });
 
-  console.log(response);
-
   if (response.success) {
     console.log(response);
 
@@ -69,9 +67,11 @@ const shareRequest = async (
       notify: notify,
     },
   });
+  console.log(res);
 
-  if (res.success) {
+  if ((res.status = "200")) {
     //TODO: remove email from list
+    removeAllEmails();
     alert("share successful");
   } else {
     alert("share failed");
@@ -85,9 +85,13 @@ const getUserDocuments = async (userId) => {
     headers: {
       userId: userId,
     }});
+ };
 
-    console.log(res.data.data);
-    return res.data.data;
+
+const removeAllEmails = () => {
+  var emailList = document.getElementById("users-table");
+  emailList.innerHTML = "";
+
 };
 
 const fileImport = async (token, ownerId, filePath, parentId) => {
