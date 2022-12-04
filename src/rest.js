@@ -108,13 +108,14 @@ const displayUserDocuments = async (userId) => {
     },
   });
 
-  console.log(res.data.data);
+  let userDocs = res.data.data;
+  console.log(userDocs);
 
   let documentSelect = document.getElementById("document-id-selector");
-  let idsLength = res.data.data.length;
+  let idsLength = userDocs.length;
 
   for (var i = 0; i < idsLength; i++) {
-    var text = res.data.data[i].url + " (#" + res.data.data[i].documentId + ")";
+    var text = userDocs[i].url + " (#" + userDocs[i].documentId + ")";
     var documentData = document.createTextNode(text);
     var option = document.createElement("option");
     option.appendChild(documentData);

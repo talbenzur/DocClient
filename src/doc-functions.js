@@ -32,7 +32,7 @@ $(() => {
       }
 
       console.log("deleting: " + input.val().substring(start, end));
-      addUpdate($("#emailInput").val(), type, null, start, end);
+      addUpdate(type, null, start, end);
     }
   });
 
@@ -46,7 +46,6 @@ $(() => {
       }
 
       addUpdate(
-        $("#emailInput").val(),
         type,
         event.originalEvent.data,
         start,
@@ -82,8 +81,8 @@ $(() => {
 });
 
 const update = (updateData) => {
-  let user = $("#emailInput").val();
-  if (user != updateData.userEmail) {
+  let user = localStorage.getItem("userId");
+  if (user != updateData.userId) {
     switch (updateData.type) {
       case "APPEND":
         appendText(updateData);

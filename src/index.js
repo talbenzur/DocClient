@@ -5,9 +5,7 @@ import "bootstrap";
 import "./style.css";
 
 import {
-  // documentId,
   ownerId,
-  // userId,
 } from "./globals.js";
 
 $(() => {
@@ -35,8 +33,8 @@ $(() => {
     };
 
     loginUser(user);
-    let userId = localStorage.getItem("userId");
-    displayUserDocuments(userId);
+
+    displayUserDocuments(localStorage.getItem("userId"));
   });
 
    // open document
@@ -99,6 +97,22 @@ const addEmailToList = (inputUser) => {
   console.log(userEmailList);
   document.getElementById("users-table").appendChild(li);
 };
+
+// const displayUserDocuments = () => {
+//   let userDocs = getUserDocuments(localStorage.getItem("userId"))
+//   console.log(userDocs);
+
+//   let documentSelect = document.getElementById("document-id-selector");
+//   let idsLength = userDocs.length;
+
+//   for (var i = 0; i < idsLength; i++) {
+//     var text = userDocs[i].url + " (#" + userDocs[i].documentId + ")";
+//     var documentData = document.createTextNode(text);
+//     var option = document.createElement("option");
+//     option.appendChild(documentData);
+//     documentSelect.appendChild(option);
+//   }
+// };
 
 const updatePermission = (notify) => {
   let permission = document.getElementById("permission").value;
