@@ -1,4 +1,5 @@
 import { serverAddress } from "./constants";
+import {createMainFolder} from "./index";
 import axios from "axios";
 
 const createUser = async (user) => {
@@ -32,28 +33,32 @@ const loginUser = async (user) => {
 
   console.log("in Login user");
 
-  const { data: response } = await axios({
-    method: "post",
-    url: serverAddress + "/auth/login",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: {
-      email: user.email,
-      password: user.password,
-    },
-  });
-  if (response.success) {
-    console.log(response);
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
 
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("userId", response.data.userId);
+  let requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify({email: user.email, password: user.password}),
+    redirect: "follow",
+  };
+  fetch(serverAddress + "/auth/login", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
 
-    alert("Login successful");
-    //window.location.href = "./document.html";
-  } else {
-    alert("Login failed");
-  }
+      if (result.success) {
+        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("userId", result.data.userId);
+        alert("You are now logged-in!");
+        displayUserDocuments();
+      } else {
+        alert("Login failed - " + result.message);
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
 };
 
 const shareRequest = async (
@@ -64,6 +69,7 @@ const shareRequest = async (
   permission,
   notify
 ) => {
+  
   const res = await axios({
     method: "patch",
     url: serverAddress + "/document/share",
@@ -94,7 +100,9 @@ const removeAllEmails = () => {
   emailList.innerHTML = "";
 };
 
-const displayUserDocuments = async (userId) => {
+const displayUserDocuments = async () => {
+  let userId = localStorage.getItem("userId");
+
   deleteChildren("document-id-selector");
 
   const res = await axios({
@@ -167,7 +175,8 @@ const getURL = async (documentId) => {
 const createDocument = async (title) => {
   let parentId = localStorage.getItem("folderId");
   if (parentId == null || parentId == "undefined") {
-    await createFolder("0", "Main");
+    // createMainFolder();
+    localStorage.setItem("folderId", "5");
     parentId = localStorage.getItem("folderId");
   }
 
@@ -191,10 +200,14 @@ const createDocument = async (title) => {
   fetch(serverAddress + "/document/create", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      alert("Document was successfully created!");
-      console.log(result);
-      displayUserDocuments(userId);
-      return result.data;
+      if (result.success) {
+        console.log(result);
+        alert("Document was successfully created!");
+        displayUserDocuments();
+        return result.data;
+      } else {
+        alert("Error Occurred: " + result.message);
+      }
     })
     .catch((error) => console.log("error", error));
 }
@@ -220,8 +233,12 @@ const createFolder = async (parentId, title) => {
   fetch(serverAddress + "/folder/create", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
-      localStorage.setItem("folderId", result.data.id);
+      if (result.success) {
+        console.log(result);
+        localStorage.setItem("folderId", result.data.id);
+      } else {
+        alert("Error Occurred: " + result.message);
+      }
     })
     .catch((error) => console.log("error", error));
 }
@@ -245,7 +262,7 @@ const deleteDocument = async (documentId) => {
     .then((result) => {
       alert("Document was successfully deleted!");
       console.log(result);
-      displayUserDocuments(userId);
+      displayUserDocuments();
     })
     .catch((error) => console.log("error", error));
 }

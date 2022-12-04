@@ -1,12 +1,10 @@
 import $ from "jquery";
-import { createUser, loginUser, shareRequest, displayUserDocuments, createDocument, deleteDocument } from "./rest";
+import { createUser, loginUser, shareRequest, displayUserDocuments, createDocument, createFolder, deleteDocument } from "./rest";
 import { join, openConnection } from "./sockets";
 import "bootstrap";
 import "./style.css";
 
-import {
-  ownerId,
-} from "./globals.js";
+
 
 $(() => {
   //create user
@@ -33,8 +31,6 @@ $(() => {
     };
 
     await loginUser(user);
-
-    displayUserDocuments(localStorage.getItem("userId"));
   });
 
   // open document
@@ -106,6 +102,10 @@ const displayMetaData = (metadata) => {
   }
 };
 
+const createMainFolder = () => {
+  createFolder(0, "Main");
+}
+
 const displayActiveUsers = (activeUsers) => {
   document.getElementById("doc-active-users").innerHTML = activeUsers.join(', ');
 }
@@ -135,7 +135,7 @@ const updatePermission = (notify) => {
   shareRequest(
     localStorage.getItem("token"),
     localStorage.getItem("documentId"),
-    ownerId,
+    localStorage.getItem("userId"),
     userEmailList,
     permission,
     notify
@@ -143,4 +143,4 @@ const updatePermission = (notify) => {
 };
 
 
-export { displayMetaData, displayActiveUsers };
+export { displayMetaData, displayActiveUsers, createMainFolder };
