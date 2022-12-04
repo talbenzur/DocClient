@@ -2,7 +2,6 @@ import $ from "jquery";
 import { addUpdate } from "./sockets";
 import { shareRequest, fileImport, fileExport, getURL } from "./rest";
 
-
 $(() => {
   var input = $("#main-doc");
   let isDelete = false;
@@ -39,12 +38,7 @@ $(() => {
         end = end + 1;
       }
 
-      addUpdate(
-        type,
-        event.originalEvent.data,
-        start,
-        end
-      );
+      addUpdate(type, event.originalEvent.data, start, end);
     }
 
     isDelete = false;
@@ -52,15 +46,20 @@ $(() => {
 
   $(".copyLink").on("click", function () {
     console.log("on copyLink");
-    copyLink();
-    getURL(documentId);
+    //copyLink();
+    getURL(localStorage.getItem("documentId"));
   });
 
   $(".import").on("click", function () {
     console.log("on import");
 
     //implement: send- token, ownerId, filePath, parentId
-    fileImport(localStorage.getItem("token"), localStorage.getItem("document").metadata.owner.id, filePath, localStorage.getItem("document").metadata.parentId);
+    fileImport(
+      localStorage.getItem("token"),
+      localStorage.getItem("document").metadata.owner.id,
+      filePath,
+      localStorage.getItem("document").metadata.parentId
+    );
   });
 
   $(".export").on("click", function () {
