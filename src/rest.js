@@ -21,7 +21,7 @@ const createUser = async (user) => {
 
   if ((res.status = "200")) {
     alert("create user successful- Check your email for activation");
-    window.location.href = "./login.html";
+    //window.location.href = "./login.html";
   } else {
     alert("create user failed");
   }
@@ -45,24 +45,18 @@ const loginUser = async (user) => {
   if (response.success) {
     console.log(response);
 
-    console.log("res.data.token: " + response.data.token);
-    console.log("res.data.userId: " + response.data.userId);
-
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("userId", response.data.userId);
 
-    console.log(localStorage.getItem("token"));
-    console.log(localStorage.getItem("userId"));
-
     alert("Login successful");
-
-    window.location.href = "./document.html";
+    //window.location.href = "./document.html";
   } else {
     alert("Login failed");
   }
 };
 
 const shareRequest = async (
+  token,
   documentID,
   ownerID,
   emails,
@@ -73,7 +67,7 @@ const shareRequest = async (
     method: "patch",
     url: serverAddress + "/document/share",
     headers: {
-      token: "1669728413023-26563711-c6d1-487f-a04e-63631185afb3",
+      token: token,
     },
     data: {
       documentID: documentID,
@@ -88,7 +82,7 @@ const shareRequest = async (
   if ((res.status = "200")) {
     removeAllEmails();
     alert("share successful");
-    window.location.href = "./document.html";
+    //window.location.href = "./document.html";
   } else {
     alert("share failed");
   }
