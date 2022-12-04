@@ -56,11 +56,12 @@ const join = (requiredDocumentId) => {
     openConnection();
 }
 
-const addUpdate = (userEmail, type, content, startPosition, endPosition) => {
-  sendUpate(userEmail, type, content, startPosition, endPosition);
+const addUpdate = (type, content, startPosition, endPosition) => {
+  sendUpate(type, content, startPosition, endPosition);
 };
 
-const sendUpate = (userEmail, type, content, startPosition, endPosition) => {
+const sendUpate = (type, content, startPosition, endPosition) => {
+    let userId = localStorage.getItem("userId");
     let documentId = localStorage.getItem("documentId");
 
     stompClient.send(
@@ -68,7 +69,7 @@ const sendUpate = (userEmail, type, content, startPosition, endPosition) => {
     [],
     JSON.stringify({
       documentId: documentId,
-      userEmail: userEmail,
+      userId: userId,
       type: type,
       content: content,
       startPosition: startPosition,
