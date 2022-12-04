@@ -41,7 +41,6 @@ const loginUser = async (user) => {
       password: user.password,
     },
   });
-
   if (response.success) {
     console.log(response);
 
@@ -121,11 +120,11 @@ const displayUserDocuments = async (userId) => {
 
 const deleteChildren = (elementId) => {
   let element = document.getElementById(elementId);
-  
-  var child = element.lastElementChild; 
+
+  var child = element.lastElementChild;
   while (child) {
-      element.removeChild(child);
-      child = element.lastElementChild;
+    element.removeChild(child);
+    child = element.lastElementChild;
   }
 };
 
@@ -152,21 +151,27 @@ const fileExport = async (token, documentId, userId) => {
     headers: {
       token: token,
       documentId: documentId,
-      userId: userId
-    }
+      userId: userId,
+    },
   });
   console.log(res);
 };
 
 const getURL = async (documentId) => {
-  const res = await axios({
+  const { data: response } = await axios({
     method: "get",
     url: serverAddress + "/document/getUrl",
-    data: {
+    headers: {
       documentId: documentId,
     },
   });
-  console.log(res);
+
+  if (response.success) {
+    console.log(response);
+    console.log(response.data.data);
+  } else {
+    console.log("getUrl failed");
+  }
 };
 
 export {

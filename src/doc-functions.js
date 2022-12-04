@@ -46,9 +46,8 @@ $(() => {
 
   $(".copyLink").on("click", function () {
     console.log("on copyLink");
-    copyLink();
-    const data = getURL(localStorage.getItem("documentId"));
-    console.log(data);
+    //copyLink();
+    getURL(localStorage.getItem("documentId"));
   });
 
   $(".import").on("click", function () {
