@@ -2,12 +2,12 @@ import $ from "jquery";
 import { addUpdate } from "./sockets";
 import { shareRequest, fileImport, fileExport, getURL } from "./rest";
 
-import {
-  documentId,
-  parentId,
-  ownerId,
-  filePath,
-} from "./globals.js";
+// import {
+//   documentId,
+//   parentId,
+//   ownerId,
+//   filePath,
+// } from "./globals.js";
 
 $(() => {
   var input = $("#main-doc");
