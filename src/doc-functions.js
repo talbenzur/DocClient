@@ -2,12 +2,6 @@ import $ from "jquery";
 import { addUpdate } from "./sockets";
 import { shareRequest, fileImport, fileExport, getURL } from "./rest";
 
-// import {
-//   documentId,
-//   parentId,
-//   ownerId,
-//   filePath,
-// } from "./globals.js";
 
 $(() => {
   var input = $("#main-doc");
@@ -66,15 +60,14 @@ $(() => {
     console.log("on import");
 
     //implement: send- token, ownerId, filePath, parentId
-    fileImport(localStorage.getItem("token"), ownerId, filePath, parentId);
+    fileImport(localStorage.getItem("token"), localStorage.getItem("document").metadata.owner.id, filePath, localStorage.getItem("document").metadata.parentId);
   });
 
   $(".export").on("click", function () {
     console.log("on export");
-    //let docId = $("#main-doc").getAttribute("documentid");
     fileExport(
       localStorage.getItem("token"),
-      documentId,
+      localStorage.getItem("documentId"),
       localStorage.getItem("userId")
     );
   });

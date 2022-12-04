@@ -151,11 +151,9 @@ const fileExport = async (token, documentId, userId) => {
     url: serverAddress + "/document/export",
     headers: {
       token: token,
-    },
-    data: {
       documentId: documentId,
-      userId: userId,
-    },
+      userId: userId
+    }
   });
   console.log(res);
 };
