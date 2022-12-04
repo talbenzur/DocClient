@@ -28,6 +28,8 @@ const createUser = async (user) => {
 };
 
 const loginUser = async (user) => {
+  localStorage.clear();
+
   console.log("in Login user");
 
   const { data: response } = await axios({
@@ -41,7 +43,6 @@ const loginUser = async (user) => {
       password: user.password,
     },
   });
-
   if (response.success) {
     console.log(response);
 
@@ -125,8 +126,6 @@ const fileImport = async (token, ownerId, filePath, parentId) => {
     url: serverAddress + "/document/import",
     headers: {
       token: token,
-    },
-    data: {
       ownerId: ownerId,
       filePath: filePath,
       parentId: parentId,
@@ -142,21 +141,27 @@ const fileExport = async (token, documentId, userId) => {
     headers: {
       token: token,
       documentId: documentId,
-      userId: userId
-    }
+      userId: userId,
+    },
   });
   console.log(res);
 };
 
 const getURL = async (documentId) => {
-  const res = await axios({
+  const { data: response } = await axios({
     method: "get",
     url: serverAddress + "/document/getUrl",
-    data: {
+    headers: {
       documentId: documentId,
     },
   });
-  console.log(res);
+
+  if (response.success) {
+    console.log(response);
+    console.log(response.data.data);
+  } else {
+    console.log("getUrl failed");
+  }
 };
 
 const createDocument = async (title) => {
