@@ -134,8 +134,6 @@ const fileImport = async (token, ownerId, filePath, parentId) => {
     url: serverAddress + "/document/import",
     headers: {
       token: token,
-    },
-    data: {
       ownerId: ownerId,
       filePath: filePath,
       parentId: parentId,
