@@ -1,7 +1,6 @@
 import $ from "jquery";
 import { addUpdate } from "./sockets";
-import { shareRequest, fileImport, fileExport, getURL } from "./rest";
-
+import { shareRequest, fileImport, fileExport, getURL, createFolder } from "./rest";
 
 $(() => {
   var input = $("#main-doc");
@@ -39,12 +38,7 @@ $(() => {
         end = end + 1;
       }
 
-      addUpdate(
-        type,
-        event.originalEvent.data,
-        start,
-        end
-      );
+      addUpdate(type, event.originalEvent.data, start, end);
     }
 
     isDelete = false;
@@ -52,20 +46,24 @@ $(() => {
 
   $(".copyLink").on("click", function () {
     console.log("on copyLink");
-    copyLink();
-    getURL(documentId);
+    //copyLink();
+    getURL(localStorage.getItem("documentId"));
   });
 
-  $(".import").on("click", function () {
+  $(".import").on("click", async function () {
     console.log("on import");
 
     var input = document.createElement('input');
     input.type = 'file';
     input.click();
 
-    let document = JSON.parse(localStorage.getItem("document"));
+    let parentId = localStorage.getItem("folderId");
+    if (parentId == null || parentId == "undefined") {
+      await createFolder("0", "Main");
+      parentId = localStorage.getItem("folderId");
+    }
 
-    // fileImport(localStorage.getItem("token"), localStorage.getItem("userId"), input.name, /*send parent id*/);
+    fileImport(localStorage.getItem("token"), localStorage.getItem("userId"), input.name, parentId);
   });
 
   $(".export").on("click", function () {
