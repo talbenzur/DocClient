@@ -45,17 +45,10 @@ const loginUser = async (user) => {
   if (response.success) {
     console.log(response);
 
-    console.log("res.data.token: " + response.data.token);
-    console.log("res.data.userId: " + response.data.userId);
-
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("userId", response.data.userId);
 
-    console.log(localStorage.getItem("token"));
-    console.log(localStorage.getItem("userId"));
-
     alert("Login successful");
-
     //window.location.href = "./document.html";
   } else {
     alert("Login failed");
@@ -63,6 +56,7 @@ const loginUser = async (user) => {
 };
 
 const shareRequest = async (
+  token,
   documentID,
   ownerID,
   emails,
@@ -73,7 +67,7 @@ const shareRequest = async (
     method: "patch",
     url: serverAddress + "/document/share",
     headers: {
-      token: localStorage.getItem("token"),
+      token: token,
     },
     data: {
       documentID: documentID,
