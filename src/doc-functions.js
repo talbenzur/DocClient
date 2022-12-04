@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { addUpdate } from "./sockets";
-import { shareRequest, fileImport, fileExport, getURL } from "./rest";
+import { shareRequest, fileImport, fileExport, getURL, createFolder } from "./rest";
 
 $(() => {
   var input = $("#main-doc");
@@ -50,14 +50,20 @@ $(() => {
     getURL(localStorage.getItem("documentId"));
   });
 
-  $(".import").on("click", function () {
+  $(".import").on("click", async function () {
     console.log("on import");
 
     var input = document.createElement('input');
     input.type = 'file';
     input.click();
 
-    // fileImport(localStorage.getItem("token"), localStorage.getItem("userId"), input.name, /*send parent id*/);
+    let parentId = localStorage.getItem("folderId");
+    if (parentId == null || parentId == "undefined") {
+      await createFolder("0", "Main");
+      parentId = localStorage.getItem("folderId");
+    }
+
+    fileImport(localStorage.getItem("token"), localStorage.getItem("userId"), input.name, parentId);
   });
 
   $(".export").on("click", function () {

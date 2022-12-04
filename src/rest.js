@@ -168,8 +168,8 @@ const createDocument = async (title) => {
   let parentId = localStorage.getItem("folderId");
   if (parentId == null || parentId == "undefined") {
     await createFolder("0", "Main");
+    parentId = localStorage.getItem("folderId");
   }
-  parentId = localStorage.getItem("folderId");
 
   let ownerId = localStorage.getItem("userId");
   let token = localStorage.getItem("token");
@@ -179,8 +179,8 @@ const createDocument = async (title) => {
   myHeaders.append("ownerId", ownerId);
 
   var data = new FormData();
-  data.append( "parentId", parentId );
-  data.append( "title", title );
+  data.append("parentId", parentId);
+  data.append("title", title);
 
   let requestOptions = {
     method: "POST",
@@ -208,8 +208,8 @@ const createFolder = async (parentId, title) => {
   myHeaders.append("ownerId", ownerId);
 
   var data = new FormData();
-  data.append( "parentId", parentId );
-  data.append( "title", title );
+  data.append("parentId", parentId);
+  data.append("title", title);
 
   let requestOptions = {
     method: "POST",
@@ -269,5 +269,6 @@ export {
   getURL,
   displayUserDocuments,
   createDocument,
-  deleteDocument
+  deleteDocument,
+  createFolder
 };

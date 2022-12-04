@@ -23,7 +23,7 @@ $(() => {
   });
 
   //login
-  $("#btnLogin").on("click", function (event) {
+  $("#btnLogin").on("click", async function (event) {
     event.preventDefault();
     console.log("on login");
 
@@ -32,7 +32,7 @@ $(() => {
       password: $("#passwordInputLogin").val(),
     };
 
-    loginUser(user);
+    await loginUser(user);
 
     displayUserDocuments(localStorage.getItem("userId"));
   });
