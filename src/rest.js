@@ -94,6 +94,8 @@ const removeAllEmails = () => {
 };
 
 const displayUserDocuments = async (userId) => {
+  deleteChildren("document-id-selector");
+
   const res = await axios({
     method: "get",
     url: serverAddress + "/document/getDocumentsByUser",
@@ -114,6 +116,16 @@ const displayUserDocuments = async (userId) => {
     var option = document.createElement("option");
     option.appendChild(documentData);
     documentSelect.appendChild(option);
+  }
+};
+
+const deleteChildren = (elementId) => {
+  let element = document.getElementById(elementId);
+  
+  var child = element.lastElementChild; 
+  while (child) {
+      element.removeChild(child);
+      child = element.lastElementChild;
   }
 };
 
