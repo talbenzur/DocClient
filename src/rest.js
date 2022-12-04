@@ -119,16 +119,6 @@ const displayUserDocuments = async (userId) => {
   }
 };
 
-const deleteChildren = (elementId) => {
-  let element = document.getElementById(elementId);
-  
-  var child = element.lastElementChild; 
-  while (child) {
-      element.removeChild(child);
-      child = element.lastElementChild;
-  }
-};
-
 const fileImport = async (token, ownerId, filePath, parentId) => {
   const res = await axios({
     method: "post",
@@ -169,6 +159,102 @@ const getURL = async (documentId) => {
   console.log(res);
 };
 
+const createDocument = async (title) => {
+  let parentId = localStorage.getItem("folderId");
+  if (parentId == null || parentId == "undefined") {
+    await createFolder("0", "Main");
+  }
+  parentId = localStorage.getItem("folderId");
+
+  let ownerId = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
+
+  let myHeaders = new Headers();
+  myHeaders.append("token", token);
+  myHeaders.append("ownerId", ownerId);
+
+  var data = new FormData();
+  data.append( "parentId", parentId );
+  data.append( "title", title );
+
+  let requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: data,
+    redirect: "follow",
+  };
+  fetch(serverAddress + "/document/create", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      alert("Document was successfully created!");
+      console.log(result);
+      displayUserDocuments(userId);
+      return result.data;
+    })
+    .catch((error) => console.log("error", error));
+}
+
+const createFolder = async (parentId, title) => {
+  let ownerId = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
+
+  let myHeaders = new Headers();
+  myHeaders.append("token", token);
+  myHeaders.append("ownerId", ownerId);
+
+  var data = new FormData();
+  data.append( "parentId", parentId );
+  data.append( "title", title );
+
+  let requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: data,
+    redirect: "follow",
+  };
+  fetch(serverAddress + "/folder/create", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      localStorage.setItem("folderId", result.data.id);
+    })
+    .catch((error) => console.log("error", error));
+}
+
+const deleteDocument = async (documentId) => {
+  let userId = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
+
+  let myHeaders = new Headers();
+  myHeaders.append("token", token);
+  myHeaders.append("userId", userId);
+  myHeaders.append("documentId", documentId);
+
+  let requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+  fetch(serverAddress + "/document/delete", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      alert("Document was successfully deleted!");
+      console.log(result);
+      displayUserDocuments(userId);
+    })
+    .catch((error) => console.log("error", error));
+}
+
+const deleteChildren = (elementId) => {
+  let element = document.getElementById(elementId);
+
+  var child = element.lastElementChild;
+  while (child) {
+    element.removeChild(child);
+    child = element.lastElementChild;
+  }
+};
+
 export {
   createUser,
   loginUser,
@@ -177,4 +263,6 @@ export {
   fileExport,
   getURL,
   displayUserDocuments,
+  createDocument,
+  deleteDocument
 };

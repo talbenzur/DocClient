@@ -42,8 +42,8 @@ const onJoinMessageReceived = (payload) => {
     var message = JSON.parse(payload.body);
     console.log(message);
 
-    localStorage.setItem("document", message.body.data);
-    
+    localStorage.setItem("document", JSON.stringify(message.body.data));
+
     let content = message.body.data.content;
     console.log(content);
     document.getElementById("main-doc").value = content;

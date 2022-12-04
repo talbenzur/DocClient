@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { createUser, loginUser, shareRequest, displayUserDocuments } from "./rest";
+import { createUser, loginUser, shareRequest, displayUserDocuments, createDocument, deleteDocument } from "./rest";
 import { join, openConnection } from "./sockets";
 import "bootstrap";
 import "./style.css";
@@ -37,8 +37,8 @@ $(() => {
     displayUserDocuments(localStorage.getItem("userId"));
   });
 
-   // open document
-   $("#btnSelectDocument").on("click", function (event) {
+  // open document
+  $("#btnSelectDocument").on("click", function (event) {
     event.preventDefault();
     console.log("opening a document");
 
@@ -46,10 +46,30 @@ $(() => {
     join(requiredDocumentId);
   });
 
+  // new document
+  $("#btn-open-new-document").on("click", function (event) {
+    event.preventDefault();
+    console.log("Creating a new document");
+
+    let title = prompt("Please enter document's title: ", "New document");
+    let document = createDocument(title);
+
+    join(document.id);
+  });
+
+  // delete document
+  $("#btn-delete-document").on("click", function (event) {
+    event.preventDefault();
+    console.log("Deleting a document");
+
+    const requiredDocumentId = extractDocumentId($("#document-id-selector").val());
+    deleteDocument(requiredDocumentId);
+  });
+
   function extractDocumentId(documentData) {
     var rx = /(#(.\d*))/g;
     var arr = rx.exec(documentData);
-    return arr[2]; 
+    return arr[2];
   }
 
   //add user to list
@@ -72,7 +92,6 @@ $(() => {
   });
 });
 
-// openConnection();
 
 const userEmailList = new Array();
 
@@ -108,9 +127,9 @@ const updatePermission = (notify) => {
 
   console.log(
     "on Update Permission user list: " +
-      userEmailList +
-      " permission: " +
-      permission
+    userEmailList +
+    " permission: " +
+    permission
   );
 
   shareRequest(
@@ -122,5 +141,6 @@ const updatePermission = (notify) => {
     notify
   );
 };
+
 
 export { displayMetaData, displayActiveUsers };

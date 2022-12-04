@@ -59,8 +59,13 @@ $(() => {
   $(".import").on("click", function () {
     console.log("on import");
 
-    //implement: send- token, ownerId, filePath, parentId
-    fileImport(localStorage.getItem("token"), localStorage.getItem("document").metadata.owner.id, filePath, localStorage.getItem("document").metadata.parentId);
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.click();
+
+    let document = JSON.parse(localStorage.getItem("document"));
+
+    // fileImport(localStorage.getItem("token"), localStorage.getItem("userId"), input.name, /*send parent id*/);
   });
 
   $(".export").on("click", function () {
