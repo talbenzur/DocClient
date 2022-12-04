@@ -28,6 +28,8 @@ const createUser = async (user) => {
 };
 
 const loginUser = async (user) => {
+  localStorage.clear();
+
   console.log("in Login user");
 
   const { data: response } = await axios({
