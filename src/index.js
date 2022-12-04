@@ -78,8 +78,13 @@ const userEmailList = new Array();
 
 // Display document metadata:
 const displayMetaData = (metadata) => {
-  document.getElementById("doc-title").innerHTML = metadata.title;
-  document.getElementById("doc-last-edited").innerHTML = metadata.lastUpdated;
+  if (metadata != null) {
+    document.getElementById("doc-title").innerHTML = metadata.title;
+    document.getElementById("doc-last-edited").innerHTML = metadata.lastUpdated;
+  } else {
+    document.getElementById("doc-title").innerHTML = "";
+    document.getElementById("doc-last-edited").innerHTML = "";
+  }
 };
 
 const displayActiveUsers = (activeUsers) => {
@@ -97,22 +102,6 @@ const addEmailToList = (inputUser) => {
   console.log(userEmailList);
   document.getElementById("users-table").appendChild(li);
 };
-
-// const displayUserDocuments = () => {
-//   let userDocs = getUserDocuments(localStorage.getItem("userId"))
-//   console.log(userDocs);
-
-//   let documentSelect = document.getElementById("document-id-selector");
-//   let idsLength = userDocs.length;
-
-//   for (var i = 0; i < idsLength; i++) {
-//     var text = userDocs[i].url + " (#" + userDocs[i].documentId + ")";
-//     var documentData = document.createTextNode(text);
-//     var option = document.createElement("option");
-//     option.appendChild(documentData);
-//     documentSelect.appendChild(option);
-//   }
-// };
 
 const updatePermission = (notify) => {
   let permission = document.getElementById("permission").value;

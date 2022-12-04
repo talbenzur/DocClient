@@ -38,7 +38,20 @@ const onConnected = () => {
   getActiveUsers(localStorage.getItem("documentId"));
 };
 
+const onJoinMessageReceived = (payload) => {
+    var message = JSON.parse(payload.body);
+    console.log(message);
+
+    localStorage.setItem("document", message.body.data);
+    
+    let content = message.body.data.content;
+    console.log(content);
+    document.getElementById("main-doc").value = content;
+}
+
 const onJoined = () => {
+    stompClient.subscribe("/topic/join", onJoinMessageReceived);
+
     let documentId = localStorage.getItem("documentId");
     let userId = localStorage.getItem("userId");
     stompClient.send("/app/join", [], JSON.stringify({documentId, userId}));
@@ -54,7 +67,18 @@ const openConnection = () => {
 const join = (requiredDocumentId) => {
     localStorage.setItem("documentId", requiredDocumentId);
     openConnection();
-}
+};
+
+const leave = () => {
+    displayMetaData(null);
+    displayActiveUsers([]);
+
+    let documentId = localStorage.getItem("documentId");
+    let userId = localStorage.getItem("userId");
+    stompClient.send("/app/leave", [], JSON.stringify({documentId, userId}));
+
+    localStorage.removeItem("documentId");
+};
 
 const addUpdate = (type, content, startPosition, endPosition) => {
   sendUpate(type, content, startPosition, endPosition);
