@@ -48,8 +48,8 @@ $(() => {
     console.log("Creating a new document");
 
     let title = prompt("Please enter document's title: ", "New document");
+    
     let document = createDocument(title);
-
     join(document.id);
   });
 

@@ -152,7 +152,14 @@ const fileExport = async (token, documentId, userId) => {
       userId: userId,
     },
   });
+
   console.log(res);
+
+  if (res.data.success) {
+    alert("Document was successfully exported!")
+  } else {
+    alert("Error occurred while trying to export: " + res.message);
+  }
 };
 
 const getURL = async (documentId) => {
@@ -164,53 +171,13 @@ const getURL = async (documentId) => {
     },
   });
 
+
   if (response.success) {
-    console.log(response);
-    console.log(response.data.data);
+    alert("URL: " + response.data);
   } else {
     console.log("getUrl failed");
   }
 };
-
-const createDocument = async (title) => {
-  let parentId = localStorage.getItem("folderId");
-  if (parentId == null || parentId == "undefined") {
-    // createMainFolder();
-    localStorage.setItem("folderId", "5");
-    parentId = localStorage.getItem("folderId");
-  }
-
-  let ownerId = localStorage.getItem("userId");
-  let token = localStorage.getItem("token");
-
-  let myHeaders = new Headers();
-  myHeaders.append("token", token);
-  myHeaders.append("ownerId", ownerId);
-
-  var data = new FormData();
-  data.append("parentId", parentId);
-  data.append("title", title);
-
-  let requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: data,
-    redirect: "follow",
-  };
-  fetch(serverAddress + "/document/create", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      if (result.success) {
-        console.log(result);
-        alert("Document was successfully created!");
-        displayUserDocuments();
-        return result.data;
-      } else {
-        alert("Error Occurred: " + result.message);
-      }
-    })
-    .catch((error) => console.log("error", error));
-}
 
 const createFolder = async (parentId, title) => {
   let ownerId = localStorage.getItem("userId");
@@ -236,6 +203,45 @@ const createFolder = async (parentId, title) => {
       if (result.success) {
         console.log(result);
         localStorage.setItem("folderId", result.data.id);
+      } else {
+        alert("Error Occurred: " + result.message);
+      }
+    })
+    .catch((error) => console.log("error", error));
+}
+
+const createDocument = async (title) => {
+  let ownerId = localStorage.getItem("userId");
+  let token = localStorage.getItem("token");
+  let parentId = localStorage.getItem("folderId");
+  if (parentId == null || parentId == "undefined") {
+    // createMainFolder();
+    localStorage.setItem("folderId", "3");
+    parentId = localStorage.getItem("folderId");
+  }
+
+  let myHeaders = new Headers();
+  myHeaders.append("token", token);
+  myHeaders.append("ownerId", ownerId);
+
+  var data = new FormData();
+  data.append("parentId", parentId);
+  data.append("title", title);
+
+  let requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: data,
+    redirect: "follow",
+  };
+  fetch(serverAddress + "/document/create", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success) {
+        console.log(result);
+        alert("Document was successfully created!");
+        displayUserDocuments();
+        return result.data;
       } else {
         alert("Error Occurred: " + result.message);
       }
